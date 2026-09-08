@@ -246,10 +246,4 @@ Bachelor of Computer Applications Graduate
 
 **Interests:** Data Analysis • Information Management • Technology
 
----
-
-⭐ **If you find this project useful, please consider giving the repository a star!**
-
-```
-```
 
