@@ -1,158 +1,255 @@
-# Crime Data Analysis – Day 2
+
+# 📊  DAY2 
+Crime Data Analysis — Data Cleaning & Transformation
+
+A beginner-friendly data analysis project using **Python, Pandas, Google Colab, and Excel**. This project focuses on selecting, filtering, and sorting crime data as part of the data cleaning and transformation process.
+
+---
 
 ## 📌 Project Overview
 
-This project focuses on **data cleaning and transformation using Python and Pandas**. The dataset contains crime records, including information about crime types, districts, victim gender, case status, severity level, and crime dates.
+This project demonstrates basic **Pandas data manipulation techniques** using a crime dataset stored in an Excel file.
 
-The work was completed using **Google Colab** and demonstrates basic Pandas techniques for inspecting, selecting, cleaning, and transforming data.
+The main objectives are to learn how to:
 
-## 🎯 Objectives
+- Import Pandas
+- Read Excel data
+- Select columns
+- Select rows
+- Use `iloc`
+- Use `loc`
+- Filter data
+- Filter multiple categories
+- Apply multiple conditions
+- Sort data
+- Sort data in ascending order
+- Sort data in descending order
 
-The main objectives of this project are to:
-
-* Load crime data into a Pandas DataFrame.
-* Inspect the structure and contents of the dataset.
-* Select individual columns.
-* Select multiple columns.
-* Identify missing values.
-* Clean inconsistent categorical values.
-* Transform data into a more useful format.
-* Prepare the dataset for further analysis.
+---
 
 ## 🛠️ Technologies Used
 
-* **Python 3**
-* **Pandas**
-* **Google Colab**
-* **Microsoft Excel** dataset
+- Python
+- Pandas
+- Google Colab
+- Microsoft Excel
+- GitHub
 
-## 📊 Dataset
+---
 
-The project uses a crime dataset named:
+## 📂 Dataset
+
+The dataset used is:
 
 `CRIME-DATA-ANALYSIS-COMPLE.xlsx`
 
-The dataset contains approximately **300 crime records**.
+The dataset contains crime-related information such as:
 
-Important columns include:
+- Crime ID
+- Crime Date
+- Crime Type
+- District
+- Victim Gender
+- Case Status
+- Severity Level
 
-| Column           | Description                        |
-| ---------------- | ---------------------------------- |
-| `Crime_ID`       | Unique identifier for a crime case |
-| `Crime_Date`     | Date when the crime occurred       |
-| `Crime_Type`     | Type/category of crime             |
-| `District`       | District where the crime occurred  |
-| `Victim_Gender`  | Gender of the victim               |
-| `Case_Status`    | Current status of the case         |
-| `Severity_Level` | Severity of the crime              |
+---
 
-## 🔍 Data Exploration
+## 🚀 Data Analysis Code
 
-The notebook demonstrates how to select a single column:
+### 1. Import Pandas
+
+```python
+import pandas as pd
+````
+
+### 2. Read Excel Data
+
+```python
+data = pd.read_excel(
+    "/content/drive/MyDrive/Colab Notebooks/CRIME-DATA-ANALYSIS-COMPLE.xlsx"
+)
+```
+
+### 3. Select One Column
 
 ```python
 data['Victim_Gender']
 ```
 
-It also demonstrates selecting multiple columns:
+### 4. Select Multiple Columns
 
 ```python
 data[['Crime_Type', 'District', 'Victim_Gender']]
 ```
 
-These operations help focus the analysis on specific variables.
+### 5. Select One Row Using `iloc`
 
-## 🧹 Data Cleaning
-
-The dataset contains some data-quality issues, including:
-
-* Missing values (`NaN`)
-* Inconsistent capitalization such as `Male`, `MALE`, and `male`
-* Inconsistent case-status values such as `Closed` and `closed`
-* Inconsistent severity values such as `Medium`, `MEDIUM`, and `medium`
-* Unknown values in some categorical fields
-
-These issues need to be standardized before performing reliable analysis.
-
-For example, categorical values can be standardized using:
+`iloc` selects data based on integer position.
 
 ```python
-data['Victim_Gender'] = data['Victim_Gender'].str.strip().str.title()
+data.iloc[1]
 ```
 
-Similarly:
+### 6. Select Multiple Rows Using `iloc`
 
 ```python
-data['Case_Status'] = data['Case_Status'].str.strip().str.title()
-data['Severity_Level'] = data['Severity_Level'].str.strip().str.title()
+data.iloc[0:10]
 ```
 
-## 📈 Possible Future Analysis
-
-After cleaning the dataset, it can be used to investigate questions such as:
-
-* Which crime type occurs most frequently?
-* Which district has the highest number of reported crimes?
-* What is the distribution of crimes by victim gender?
-* How many cases are open, closed, or under investigation?
-* Which crimes have the highest severity?
-* How do crime patterns change over time?
-
-## ▶️ How to Run
-
-### Using Google Colab
-
-1. Open the notebook in Google Colab.
-2. Upload the crime dataset.
-3. Import Pandas:
+### 7. Select Rows and Columns Using `iloc`
 
 ```python
-import pandas as pd
+data.iloc[5:10, 2:]
 ```
 
-4. Load the Excel file:
+### 8. Select Rows and Columns Using `loc`
+
+`loc` allows us to select rows and columns using their labels.
 
 ```python
-data = pd.read_excel("CRIME-DATA-ANALYSIS-COMPLA.xlsx")
+data.loc[10:200, ['Victim_Gender', 'District']]
 ```
 
-5. Run the notebook cells from top to bottom.
+### 9. View the First Rows
 
-### Using Jupyter Notebook
-
-Install Pandas and the Excel-reading dependency if necessary:
-
-```bash
-pip install pandas openpyxl
+```python
+data.head()
 ```
 
-Then run the notebook using Jupyter Notebook or JupyterLab.
+### 10. Filter Female Victims
 
-## 📁 Project Structure
-
-```text
-Crime-Data-Analysis/
-│
-├── Day2.ipynb
-├── CRIME-DATA-ANALYSIS-COMPLA.xlsx
-└── README.md
+```python
+data[
+    data['Victim_Gender'].str.strip().str.lower() == 'female'
+]
 ```
 
-## 📝 Learning Outcomes
+* `.str.strip()` removes unnecessary spaces.
+* `.str.lower()` converts text to lowercase.
+* `== 'female'` selects female records.
 
-By completing this project, you practice:
+### 11. Filter Multiple Categories Using `isin()`
 
-* Importing Pandas
-* Reading Excel files
-* Working with DataFrames
-* Selecting columns
-* Inspecting datasets
-* Identifying data-quality problems
-* Cleaning categorical data
-* Preparing data for analysis
+```python
+data[
+    data['Victim_Gender'].isin(['Male', 'Female'])
+]
+```
 
+This selects records where the victim gender is either **Male** or **Female**.
 
+### 12. Filter Using Multiple Conditions
+
+```python
+data[
+    (data['Victim_Gender'] == 'Female') &
+    (data['Severity_Level'] == 'High')
+]
+```
+
+This selects records where:
+
+* Victim Gender = Female
+* Severity Level = High
+
+The `&` operator means **AND**.
+
+### 13. Sort Data
+
+```python
+data.sort_values('Crime_Type')
+```
+
+By default, Pandas sorts the values in ascending order.
+
+### 14. Sort in Ascending Order
+
+```python
+data.sort_values(
+    'Crime_Type',
+    ascending=True
+)
+```
+
+### 15. Sort in Descending Order
+
+```python
+data.sort_values(
+    'Crime_Type',
+    ascending=False
+)
+```
 
 ---
 
-⭐ This project is part of a practical learning exercise in **Python, Pandas, and Data Analysis**.
+## 📚 Pandas Functions Used
+
+| Function                 | Purpose                    |              |
+| ------------------------ | -------------------------- | ------------ |
+| `pd.read_excel()`        | Read an Excel file         |              |
+| `data['column']`         | Select one column          |              |
+| `data[['col1', 'col2']]` | Select multiple columns    |              |
+| `data.iloc[]`            | Select data by position    |              |
+| `data.loc[]`             | Select data by label       |              |
+| `data.head()`            | Display the first rows     |              |
+| `.str.strip()`           | Remove extra spaces        |              |
+| `.str.lower()`           | Convert text to lowercase  |              |
+| `.isin()`                | Filter multiple categories |              |
+| `sort_values()`          | Sort data                  |              |
+| `ascending=True`         | Ascending order            |              |
+| `ascending=False`        | Descending order           |              |
+| `&`                      | AND condition              |              |
+| `                        | `                          | OR condition |
+
+---
+
+## 🎯 Learning Outcomes
+
+By completing this project, I practiced how to:
+
+* Work with Excel datasets using Pandas
+* Select specific columns and rows
+* Use `iloc` and `loc`
+* Filter data using conditions
+* Filter multiple categories
+* Clean text values
+* Apply multiple conditions
+* Sort data in different orders
+* Prepare data for further analysis
+
+---
+
+## 🔮 Future Improvements
+
+The project can be expanded by adding:
+
+* Missing value handling
+* Duplicate removal
+* Data type conversion
+* Date formatting
+* Grouping and aggregation
+* `groupby()` analysis
+* Pivot tables
+* Crime statistics
+* Data visualization
+* Crime trend analysis
+* Interactive dashboards
+
+---
+
+## 👩‍💻 Author
+
+**Shukri Idiris Mohamet**
+
+Bachelor of Computer Applications Graduate
+
+**Interests:** Data Analysis • Information Management • Technology
+
+---
+
+⭐ **If you find this project useful, please consider giving the repository a star!**
+
+```
+```
+
